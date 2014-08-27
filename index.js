@@ -22,6 +22,7 @@ function Strategy(options, verify) {
     this.version = options.version || "CAS1.0";
     this.ssoBase = options.ssoBaseURL;
     this.serverBaseURL = options.serverBaseURL;
+    this.loginURL = options.loginURL || '/login';
     this.validateURL = options.validateURL;
     this.serviceURL = options.serviceURL;
     this.useSaml = options.useSaml || false;
@@ -160,7 +161,7 @@ Strategy.prototype.authenticate = function (req, options) {
 
     var ticket = req.param('ticket');
     if (!ticket) {
-        var redirectURL = url.parse(this.ssoBase + '/login', true);
+        var redirectURL = url.parse(this.ssoBase + this.loginURL, true);
 
         redirectURL.query.service = service;
         // copy loginParams in login query
